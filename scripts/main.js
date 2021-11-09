@@ -55,8 +55,12 @@ const displayController = (() => {
     const playerStatus = document.querySelector('#player-status');
     if(gameController.gameOver) {
       playerStatus.innerText = `${player.name} wins!`;
+      playerStatus.classList.remove('black', 'bg-yellow');
+      playerStatus.classList.add('white', 'bg-green');
     } else {
       playerStatus.innerText = `${player.name}'s turn`;
+      playerStatus.classList.remove('white', 'bg-green');
+      playerStatus.classList.add('black', 'bg-yellow');
     }
   };
 
@@ -70,6 +74,7 @@ const gameController = (() => {
 
   const resetElements = () => {
     currentPlayer = player1;
+    gameController.gameOver = false;
     displayController.setPlayerStatus(currentPlayer);
     gameBoard.resetBoard();
     gameBoard.board.forEach((row, rowIndex) => {
