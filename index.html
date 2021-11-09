@@ -8,11 +8,8 @@
   <title>Tic-Tac-Toe</title>
 </head>
 <body class="avenir" onload="gameController.resetElements()">
-  <header class="">
-
-  </header>
   <section class="game-container mw6 center bg-light-gray pa3 ph5-ns w-auto h-75">
-    <div class="game-board ba">
+    <div class="game-board">
       <div class="row dt dtr h4" data-row="0">
         <div class="cell dtc tc ba bw2 b--black w4 h4 v-mid f-headline lh-solid fw9" data-cell="0"></div>
         <div class="cell dtc tc bt bb bw2 b--black w4 h4 v-mid f-headline lh-solid fw9" data-cell="1"></div>
@@ -32,11 +29,11 @@
     <div class="game-info">
       <div class="message">
         <p>
-          <span id="player-status" class="pa1 black bg-yellow"></span>
+          <span id="player-status" class="pa2 black bg-yellow"></span>
         </p>
       </div>
       <div class="buttons">
-        <button id="reset">Reset</button>
+        <button id="reset" class="white b pv2 ph3 bg-red dim bn br2 hover-shadow-inner">Reset</button>
       </div>
     </div>
   </section>
