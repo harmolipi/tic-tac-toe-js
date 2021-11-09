@@ -18,6 +18,8 @@ const gameBoard = (() => {
     ['', '', '']
   ];
 
+  let gameOver = false;
+
   const resetBoard = () => {
     board.map((row, rowIndex) => {
       row.map((cell, cellIndex) => {
@@ -26,32 +28,14 @@ const gameBoard = (() => {
     });
   };
 
-  const setEventListeners = () => {
-    const cells = document.querySelectorAll('.cell');
-    cells.forEach((cell) => {
-      cell.addEventListener('click', (e) => {
-        const cell = e.target;
-        const row = cell.dataset.row;
-        const col = cell.dataset.col;
-        const player = game.getCurrentPlayer();
-        if (cell.innerHTML === '') {
-          cell.innerHTML = player;
-          board[row][col] = player;
-          game.switchPlayer();
-          game.checkWinner();
-        }
-      });
-    });
-  };
-
   const addPiece = (piece, row, col) => {
-    if (board[row][col] === '') {
+    if (board[row][col] === '' && !gameOver) {
       board[row][col] = piece;
       displayController.updateDisplay(board);
     }
   };
 
-  return { board, resetBoard, addPiece };
+  return { board, gameOver, resetBoard, addPiece };
 })();
 
 const displayController = (() => {
@@ -88,7 +72,7 @@ const gameController = (() => {
           const rowNum = cell.parentElement.dataset.row;
           const colNum = cell.dataset.cell;
           const player = gameController.getCurrentPlayer();
-          if (cell.innerHTML === '') {
+          if (cell.innerHTML === '' && !gameBoard.gameOver) {
             gameBoard.addPiece(currentPlayer.marker, rowNum, colNum);
             gameController.switchPlayer();
             gameController.checkWinner(gameBoard.board);
@@ -111,6 +95,7 @@ const gameController = (() => {
   const checkWinner = () => {
     const winner = checkForWinner(gameBoard.board);
     if (winner) {
+      gameBoard.gameOver = true;
       alert(`${winner} wins!`);
     }
   };
@@ -126,12 +111,15 @@ const gameController = (() => {
       [0, 4, 8],
       [2, 4, 6]
     ];
+
+    let flattenedBoard = gameBoard.board.flat();
     for (let i = 0; i < winningCombos.length; i++) {
       const [a, b, c] = winningCombos[i];
-      if (board[a][0] !== '' && board[a][0] === board[b][0] && board[a][0] === board[c][0]) {
-        return board[a][0];
+      if (flattenedBoard[a] !== '' && flattenedBoard[a] === flattenedBoard[b] && flattenedBoard[a] === flattenedBoard[c]) {
+        return flattenedBoard[a];
       }
     }
+
     return false;
   };
 
