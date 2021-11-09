@@ -1,9 +1,9 @@
-function player(marker) {
-  return { marker };
+function player(marker, name) {
+  return { marker, name };
 }
 
-const player1 = player('X');
-const player2 = player('O');
+const player1 = player('X', 'Player 1');
+const player2 = player('O', 'Player 2');
 
 const gameBoard = (() => {
   const originalBoard = [
@@ -50,7 +50,18 @@ const displayController = (() => {
       });
     });
   };
-  return { updateDisplay };
+
+  const setPlayerStatus = (player) => {
+    const playerStatus = document.querySelector('#player-status');
+
+    if(gameBoard.gameOver) {
+      playerStatus.innerText = `${player.name} wins!`;
+    } else {
+      playerStatus.innerText = `${player.name}'s turn`;
+    }
+  };
+
+  return { updateDisplay, setPlayerStatus };
 })();
 
 const gameController = (() => {
@@ -58,9 +69,8 @@ const gameController = (() => {
   const resetButton = document.querySelector('#reset');
 
   const resetElements = () => {
-    const playerDisplay = document.querySelector('#current-player');
-    playerDisplay.innerText = 'Player 1';
     currentPlayer = player1;
+    displayController.setPlayerStatus(currentPlayer);
     gameBoard.resetBoard();
     gameBoard.board.forEach((row, rowIndex) => {
       row.forEach((_cell, cellIndex) => {
@@ -85,9 +95,11 @@ const gameController = (() => {
   resetButton.addEventListener('click', resetElements);
 
   const switchPlayer = () => {
-    currentPlayer = currentPlayer === player1 ? player2 : player1;
-    const playerDisplay = document.querySelector('#current-player');
-    playerDisplay.innerText = currentPlayer == player1 ? 'Player 2' : 'Player 1';
+    if(!gameBoard.gameOver) {
+      currentPlayer = currentPlayer === player1 ? player2 : player1;
+    }
+    
+    displayController.setPlayerStatus(currentPlayer);
   };
 
   const getCurrentPlayer = () => { return currentPlayer };
@@ -96,7 +108,7 @@ const gameController = (() => {
     const winner = checkForWinner(gameBoard.board);
     if (winner) {
       gameBoard.gameOver = true;
-      alert(`${winner} wins!`);
+      displayController.setPlayerStatus(winner);
     }
   };
 
