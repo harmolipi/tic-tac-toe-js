@@ -18,8 +18,6 @@ const gameBoard = (() => {
     ['', '', '']
   ];
 
-  let gameOver = false;
-
   const resetBoard = () => {
     board.map((row, rowIndex) => {
       row.map((cell, cellIndex) => {
@@ -28,14 +26,14 @@ const gameBoard = (() => {
     });
   };
 
-  const addPiece = (piece, row, col) => {
-    if (board[row][col] === '' && !gameOver) {
-      board[row][col] = piece;
+  const addPiece = (player, row, col) => {
+    if (board[row][col] === '' && !gameController.gameOver) {
+      board[row][col] = player;
       displayController.updateDisplay(board);
     }
   };
 
-  return { board, gameOver, resetBoard, addPiece };
+  return { board, resetBoard, addPiece };
 })();
 
 const displayController = (() => {
@@ -43,8 +41,10 @@ const displayController = (() => {
     board.forEach((row, rowIndex) => {
       row.forEach((cell, cellIndex) => {
         const cellElement = document.querySelector(`[data-row="${rowIndex}"] [data-cell="${cellIndex}"]`);
-        cellElement.innerText = cell;
-        if (cellElement.innerText !== '') {
+        if (cellElement.innerText === '' && cell.marker !== undefined) {
+          cellElement.innerText = cell.marker;
+        }
+        if(cellElement.innerText !== ''){
           cellElement.classList.add(cellElement.innerText === 'X' ? 'red' : 'blue');
         }
       });
@@ -53,8 +53,7 @@ const displayController = (() => {
 
   const setPlayerStatus = (player) => {
     const playerStatus = document.querySelector('#player-status');
-
-    if(gameBoard.gameOver) {
+    if(gameController.gameOver) {
       playerStatus.innerText = `${player.name} wins!`;
     } else {
       playerStatus.innerText = `${player.name}'s turn`;
@@ -65,6 +64,7 @@ const displayController = (() => {
 })();
 
 const gameController = (() => {
+  let gameOver = false;
   let currentPlayer = player1;
   const resetButton = document.querySelector('#reset');
 
@@ -82,8 +82,8 @@ const gameController = (() => {
           const rowNum = cell.parentElement.dataset.row;
           const colNum = cell.dataset.cell;
           const player = gameController.getCurrentPlayer();
-          if (cell.innerHTML === '' && !gameBoard.gameOver) {
-            gameBoard.addPiece(currentPlayer.marker, rowNum, colNum);
+          if (cell.innerHTML === '' && !gameOver) {
+            gameBoard.addPiece(currentPlayer, rowNum, colNum);
             gameController.switchPlayer();
             gameController.checkWinner(gameBoard.board);
           }
@@ -95,7 +95,7 @@ const gameController = (() => {
   resetButton.addEventListener('click', resetElements);
 
   const switchPlayer = () => {
-    if(!gameBoard.gameOver) {
+    if(!gameOver) {
       currentPlayer = currentPlayer === player1 ? player2 : player1;
     }
     
@@ -107,7 +107,7 @@ const gameController = (() => {
   const checkWinner = () => {
     const winner = checkForWinner(gameBoard.board);
     if (winner) {
-      gameBoard.gameOver = true;
+      gameController.gameOver = true;
       displayController.setPlayerStatus(winner);
     }
   };
@@ -135,5 +135,5 @@ const gameController = (() => {
     return false;
   };
 
-  return { getCurrentPlayer, switchPlayer, checkWinner, resetElements };
+  return { gameOver, getCurrentPlayer, switchPlayer, checkWinner, resetElements };
 })();
