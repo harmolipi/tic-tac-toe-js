@@ -4,6 +4,7 @@ function player(marker, name) {
 
 const player1 = player('X', 'Player 1');
 const player2 = player('O', 'Player 2');
+const players = [player1, player2];
 
 const gameBoard = (() => {
   const originalBoard = [
@@ -70,6 +71,21 @@ const displayController = (() => {
     }
   };
 
+  const changePlayerNames = document.querySelector('#change-player-names');
+  
+  changePlayerNames.addEventListener('click', (e) => {
+    e.preventDefault();
+    const playerInputs = document.querySelectorAll('.player-name-input');
+
+    for(let i = 0; i < playerInputs.length; i++) {
+      if (playerInputs[i].value !== '') {
+        players[i].name = playerInputs[i].value;
+      }
+    }
+    setPlayerStatus(gameController.getCurrentPlayer());
+    updateDisplay(gameBoard.board);
+  });
+
   return { updateDisplay, setPlayerStatus };
 })();
 
@@ -82,6 +98,10 @@ const gameController = (() => {
   const resetElements = () => {
     currentPlayer = player1;
     gameController.gameOver = false;
+    player1.name = 'Player 1';
+    player2.name = 'Player 2';
+    document.querySelector('#player-one-name-input').value = '';
+    document.querySelector('#player-two-name-input').value = '';
     displayController.setPlayerStatus(currentPlayer);
     gameBoard.resetBoard();
     gameBoard.board.forEach((row, rowIndex) => {

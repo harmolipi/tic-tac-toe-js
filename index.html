@@ -45,21 +45,17 @@
         </div>
         <button id="reset" class="white b pv2 ph3 bg-red dim bn br2 hover-shadow-inner">Reset</button>
       </div>
-      <div id="change-player-names" class="bg-light-gray pa3 ba br2 ma2 f7">
-        <div class="player-names">
-          <div class="player-name-container ma1">
-            <label for="player-one-name" id="player-one-name" class="player-name-label">Player 1</label>
-            <input id="player-one-name" class="player-name-input" type="text" placeholder="Player One Name">
-          </div>
-          <div class="player-name-container ma1">
-            <label for="player-two-name" id="player-two-name" class="player-name-label">Player 2</label>
-            <input id="player-two-name" class="player-name-input" type="text" placeholder="Player Two Name">
-          </div>
+      <form id="player-names" class="bg-light-gray pa3 ba br2 ma2 f7">
+        <div class="player-name-container ma1">
+          <label for="player-one-name" id="player-one-name-label" class="player-name-label">Player 1</label>
+          <input id="player-one-name-input" class="player-name-input" data-player="1" type="text" placeholder="Player One Name">
         </div>
-        <div class="buttons">
-          <button id="change-player-names" class="white b pv2 ph3 bg-green dim bn br2 hover-shadow-inner">Change Player Names</button>
+        <div class="player-name-container ma1">
+          <label for="player-two-name" id="player-two-name-label" class="player-name-label">Player 2</label>
+          <input id="player-two-name-input" class="player-name-input" data-player="2" type="text" placeholder="Player Two Name">
         </div>
-      </div>
+        <button id="change-player-names" class="white b pv2 ph3 bg-green dim bn br2 hover-shadow-inner">Change Player Names</button>
+      </form>
     </div>
   </section>
   <footer class="ph3 ph4-ns pv2 bt b--black-10 black-70 w-100">
