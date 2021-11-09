@@ -7,30 +7,40 @@
   <link rel="stylesheet" href="https://unpkg.com/tachyons@4.12.0/css/tachyons.min.css"/>
   <title>Tic-Tac-Toe</title>
 </head>
-<body>
+<body class="avenir">
   <header class="">
 
   </header>
   <section class="game-container mw6 center bg-light-gray pa3 ph5-ns w-auto">
     <div class="game-board ba">
       <div class="row dt dtr h4" data-row="0">
-        <div class="cell dtc tc ba b--black w4 h4 v-mid f-headline lh-solid avenir fw9" data-cell="0"></div>
-        <div class="cell dtc tc ba b--black w4 h4 v-mid f-headline lh-solid avenir fw9" data-cell="1"></div>
-        <div class="cell dtc tc ba b--black w4 h4 v-mid f-headline lh-solid avenir fw9" data-cell="2"></div>
+        <div class="cell dtc tc ba b--black w4 h4 v-mid f-headline lh-solid fw9" data-cell="0"></div>
+        <div class="cell dtc tc ba b--black w4 h4 v-mid f-headline lh-solid fw9" data-cell="1"></div>
+        <div class="cell dtc tc ba b--black w4 h4 v-mid f-headline lh-solid fw9" data-cell="2"></div>
       </div>
       <div class="row dt dtr h4" data-row="1">
-        <div class="cell dtc tc ba b--black w4 h4 v-mid f-headline lh-solid avenir fw9" data-cell="0"></div>
-        <div class="cell dtc tc ba b--black w4 h4 v-mid f-headline lh-solid avenir fw9" data-cell="1"></div>
-        <div class="cell dtc tc ba b--black w4 h4 v-mid f-headline lh-solid avenir fw9" data-cell="2"></div>
+        <div class="cell dtc tc ba b--black w4 h4 v-mid f-headline lh-solid fw9" data-cell="0"></div>
+        <div class="cell dtc tc ba b--black w4 h4 v-mid f-headline lh-solid fw9" data-cell="1"></div>
+        <div class="cell dtc tc ba b--black w4 h4 v-mid f-headline lh-solid fw9" data-cell="2"></div>
       </div>
       <div class="row dt dtr h4" data-row="2">
-        <div class="cell dtc tc ba b--black w4 h4 v-mid f-headline lh-solid avenir fw9" data-cell="0"></div>
-        <div class="cell dtc tc ba b--black w4 h4 v-mid f-headline lh-solid avenir fw9" data-cell="1"></div>
-        <div class="cell dtc tc ba b--black w4 h4 v-mid f-headline lh-solid avenir fw9" data-cell="2"></div>
+        <div class="cell dtc tc ba b--black w4 h4 v-mid f-headline lh-solid fw9" data-cell="0"></div>
+        <div class="cell dtc tc ba b--black w4 h4 v-mid f-headline lh-solid fw9" data-cell="1"></div>
+        <div class="cell dtc tc ba b--black w4 h4 v-mid f-headline lh-solid fw9" data-cell="2"></div>
+      </div>
+    </div>
+    <div class="game-info">
+      <div class="message">
+        <p>
+          <span id="current-player">Player 1</span>'s turn
+        </p>
+      </div>
+      <div class="buttons">
+        <button id="reset">Reset</button>
       </div>
     </div>
   </section>
-  <footer class="ph3 ph4-ns pv4 pv5-ns bt b--black-10 black-70">
+  <footer class="ph3 ph4-ns pv4 bt b--black-10 black-70">
     <a href="https://www.github.com/harmolipi" class="link b f3 f2-ns dim black-70 lh-solid">
       <span class="gray dib br-100 h2 w2 mr3 pa2 bg-near-white ba b--black-10">
         <svg data-icon="github" viewBox="0 0 32 32" style="fill:currentcolor">
