@@ -54,9 +54,15 @@ const displayController = (() => {
   const setPlayerStatus = (player) => {
     const playerStatus = document.querySelector('#player-status');
     if(gameController.gameOver) {
-      playerStatus.innerText = `${player.name} wins!`;
-      playerStatus.classList.remove('black', 'bg-yellow');
-      playerStatus.classList.add('white', 'bg-green');
+      if(gameController.tie) {
+        playerStatus.innerText = "It's a tie!";
+        playerStatus.classList.remove('bg-yellow');
+        playerStatus.classList.add('bg-light-blue');
+      } else {
+        playerStatus.innerText = `${player.name} wins!`;
+        playerStatus.classList.remove('black', 'bg-yellow');
+        playerStatus.classList.add('white', 'bg-green');
+      }
     } else {
       playerStatus.innerText = `${player.name}'s turn`;
       playerStatus.classList.remove('white', 'bg-green');
@@ -69,6 +75,7 @@ const displayController = (() => {
 
 const gameController = (() => {
   let gameOver = false;
+  let tie = false;
   let currentPlayer = player1;
   const resetButton = document.querySelector('#reset');
 
@@ -136,9 +143,12 @@ const gameController = (() => {
         return flattenedBoard[a];
       }
     }
-
+    if(flattenedBoard.every(cell => cell !== '')) {
+      gameController.tie = true;
+      return true;
+    }
     return false;
   };
 
-  return { gameOver, getCurrentPlayer, switchPlayer, checkWinner, resetElements };
+  return { gameOver, tie, getCurrentPlayer, switchPlayer, checkWinner, resetElements };
 })();
